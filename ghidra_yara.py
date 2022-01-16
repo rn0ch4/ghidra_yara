@@ -12,7 +12,7 @@ import uuid
 from ghidra.util.exception import CancelledException
 
 
-DIR_GHIDRA = os.path.join('C:', 'Ghidra')
+DIR_GHIDRA = 'C:\\Ghidra'
 KEY = 'Allsafe!'
 
 
