@@ -18,9 +18,10 @@ jobs:
 
       - name: setup Ghidra
         uses: actions/setup-java@v1
-        java-version: "11.0.x"
-        java-package: jdk
-        architecture: x64
+        with:
+          java-version: "11.0.x"
+          java-package: jdk
+          architecture: x64
 
       - name: setup Ghidra
         uses: er28-0652/setup-ghidra@master
