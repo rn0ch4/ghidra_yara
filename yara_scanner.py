@@ -105,7 +105,6 @@ def run(fpath_rule, fpath_enc_target):
 
 def main(fpath_rule, fpath_enc_target):
     result = run(fpath_rule, fpath_enc_target)
-    open('/tmp/result.json', 'w').write(json.dumps(result))
     print(json.dumps(result))
 
 
