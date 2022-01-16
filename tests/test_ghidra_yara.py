@@ -36,9 +36,16 @@ def run_ghidra_yara(state, fpath_yara_scanner, fpath_rule):
     runScript('../ghidra_yara.py', state)
 
 
+def get_yara_scanner():
+    args = getScriptArgs()
+    if len(args) != 1:
+        return 'yara_scanner.py'
+    return args[0]
+
+
 class TestGhidraScript(unittest.TestCase):
     # file path of yara scanner
-    VALID_YARA_SCANNER = 'yara_scanner.py'
+    VALID_YARA_SCANNER = get_yara_scanner()
     NON_YARA_SCANNER = 'tests/non_yara_scanner.py'
     CORRUPTED_YARA_SCANNER = 'tests/corrupted_yara_scanner.py'
     # file path of YARA rules

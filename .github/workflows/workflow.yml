@@ -28,7 +28,7 @@ jobs:
         with:
           version: "10.1.1"
 
-      - name: test ghidra_yara
+      - name: test ghidra_yara (python)
         run: .\test_runner.bat
 
       - name: install pyinstaller
@@ -36,6 +36,9 @@ jobs:
 
       - name: build yara_scanner.exe
         run: pyinstaller --onefile yara_scanner.py
+
+      - name: test ghidra_yara (exe)
+        run: .\test_runner.bat dist/yara_scanner.exe
 
       - name: upload
         uses: actions/upload-artifact@v2
