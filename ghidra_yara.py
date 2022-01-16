@@ -174,7 +174,7 @@ def render_scan_result(matched_info):
 
 
 def run(fpath_yara_scanner='', fpath_rule=''):
-    fpath_yara_rule = fpath_yara_scanner or get_fpath_yara_scanner()
+    fpath_yara_scanner = fpath_yara_scanner or get_fpath_yara_scanner()
     if not fpath_yara_scanner:
         return
     print('[*] yara_scanner: {}'.format(fpath_yara_scanner))
