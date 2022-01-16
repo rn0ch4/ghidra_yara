@@ -1,0 +1,43 @@
+name: test and build ghidra_yara
+on: [push]
+jobs:
+  test-and-build-ghidra_yara:
+    runs-on: windows-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: setup python3
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+          architecture: x64
+
+      - name: install yara-python
+        run: pip install yara-python
+
+      - name: setup Ghidra
+        uses: actions/setup-java@v1
+        java-version: "11.0.x"
+        java-package: jdk
+        architecture: x64
+
+      - name: setup Ghidra
+        uses: er28-0652/setup-ghidra@master
+        with:
+          version: "10.1.1"
+
+      - name: test ghidra_yara
+        run: test_runner.bat
+
+      - name: install pyinstaller
+        run: pip install pyinstaller
+
+      - name: build yara_scanner.exe
+        run: pyinstaller --onefile yara_scanner.py
+
+      - name: upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: yara_scanner.exe
+          path: dist/yara_scanner.exe
