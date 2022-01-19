@@ -40,6 +40,30 @@ jobs:
       - name: test ghidra_yara (exe)
         run: .\test_runner.bat dist/yara_scanner.exe
 
+      - name: prepare for release
+        run: 7z a -pnovirus .\dist\yara_scanner.exe .\dist\yara_scanner.zip
+      
+      - name: create release
+        uses: actions/create-release@v1.0.0
+        id: create_release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          release_name: ${{ github.ref }}
+          tag_name: ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: upload
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/yara_scanner.zip
+          asset_name: yara_scanner.zip
+          asset_content_type: application/zip
+
       - name: upload
         uses: actions/upload-artifact@v2
         with:
