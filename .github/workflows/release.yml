@@ -1,0 +1,65 @@
+on:
+  push:
+    tags:
+      - 'v*'
+name: release ghidra_yara
+jobs:
+  test-and-build-ghidra_yara:
+    runs-on: windows-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: setup python3
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+          architecture: x64
+
+      - name: install yara-python
+        run: pip install yara-python
+
+      - name: setup java
+        uses: actions/setup-java@v1
+        with:
+          java-version: "11.0.x"
+          java-package: jdk
+          architecture: x64
+
+      - name: setup Ghidra
+        uses: er28-0652/setup-ghidra@master
+        with:
+          version: "10.1.1"
+
+      - name: install pyinstaller
+        run: pip install pyinstaller
+
+      - name: build yara_scanner.exe
+        run: pyinstaller --onefile yara_scanner.py
+
+      - name: test ghidra_yara (exe)
+        run: .\test_runner.bat dist/yara_scanner.exe
+
+      - name: prepare for release
+        run: 7z a -pnovirus .\ghidra_yara.zip .\ghidra_yara.py .\dist\yara_scanner.exe
+      
+      - name: create release
+        uses: actions/create-release@v1.0.0
+        id: create_release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          release_name: ${{ github.ref }}
+          tag_name: ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./ghidra_yara.zip
+          asset_name: ghidra_yara.zip
+          asset_content_type: application/zip
