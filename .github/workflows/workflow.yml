@@ -41,7 +41,7 @@ jobs:
         run: .\test_runner.bat dist/yara_scanner.exe
 
       - name: prepare for release
-        run: 7z a -pnovirus .\dist\yara_scanner.exe .\dist\yara_scanner.zip
+        run: 7z a -pnovirus .\dist\yara_scanner.zip .\dist\yara_scanner.exe
       
       - name: create release
         uses: actions/create-release@v1.0.0
