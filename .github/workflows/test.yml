@@ -1,7 +1,7 @@
 name: test ghidra_yara
-on: [push]
+on: [pull_request]
 jobs:
-  test-and-build-ghidra_yara:
+  test-ghidra_yara:
     runs-on: windows-latest
     steps:
       - name: checkout
@@ -30,12 +30,3 @@ jobs:
 
       - name: test ghidra_yara (python)
         run: .\test_runner.bat
-
-      - name: install pyinstaller
-        run: pip install pyinstaller
-
-      - name: build yara_scanner.exe
-        run: pyinstaller --onefile yara_scanner.py
-
-      - name: test ghidra_yara (exe)
-        run: .\test_runner.bat dist/yara_scanner.exe
