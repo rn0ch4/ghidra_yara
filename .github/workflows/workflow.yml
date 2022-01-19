@@ -28,8 +28,8 @@ jobs:
         with:
           version: "10.1.1"
 
-      - name: test ghidra_yara (python)
-        run: .\test_runner.bat
+      #- name: test ghidra_yara (python)
+      #  run: .\test_runner.bat
 
       - name: install pyinstaller
         run: pip install pyinstaller
