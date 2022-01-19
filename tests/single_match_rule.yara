@@ -3,7 +3,8 @@ import "hash"
 rule RULE_ID_SINGLE_MATCH
 {
     meta:
-        description = "This is a YARA rule to check whether ghidra_yara/yara_scanner work correctly"
+        author = "rn0ch4"
+        description = "This is a YARA rule to check whether ghidra_yara work correctly"
         sha1 = "32be9afdccc76c1dba49b0fb7fd031ab3b44a9ae"
 
     strings:
