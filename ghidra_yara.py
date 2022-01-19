@@ -1,3 +1,14 @@
+# Scan imported file's content in Ghidra Project using yara_scanner (customized YARA scanner).
+#
+# If yara_scanner.exe and/or rule.yara exist under C:\ghidra_scripts directory, it uses them.
+# Otherwise, it shows a dialog box to allow you to specify file paths of them.
+# Then, it tries to scan imported file's content using yara_scanner.exe with specified YARA rule.
+# After that, it outputs results to Console window.
+# If the rule matches, it adds more detailed information to Bookmarks (Filter: "ghidra_yara").
+# @author rn0ch4
+# @category Analysis
+# @keybinding CTRL-SHIFT-Y
+
 import __main__ as script_api
 from datetime import datetime
 import jarray
@@ -12,7 +23,7 @@ import uuid
 from ghidra.util.exception import CancelledException
 
 
-DIR_GHIDRA = 'C:\\Ghidra'
+DIR_BASE = 'C:\\ghidra_scripts'
 KEY = 'Allsafe!'
 
 
@@ -41,14 +52,14 @@ def ask_fpath(title, button):
 
 
 def get_fpath_yara_scanner():
-    fpath_yara_scanner = os.path.join(DIR_GHIDRA, 'yara_scanner.exe')
+    fpath_yara_scanner = os.path.join(DIR_BASE, 'yara_scanner.exe')
     if not os.path.exists(fpath_yara_scanner):
         fpath_yara_scanner = ask_fpath('Choose yara_scanner.exe', 'Use this EXE')
     return fpath_yara_scanner
 
 
 def get_fpath_yara_rule():
-    fpath_yara_rule = os.path.join(DIR_GHIDRA, 'rule.yara')
+    fpath_yara_rule = os.path.join(DIR_BASE, 'rule.yara')
     if not os.path.exists(fpath_yara_rule):
         fpath_yara_rule = ask_fpath('Choose your YARA rule file', 'Use this rule')
     return fpath_yara_rule
