@@ -29,4 +29,5 @@ jobs:
           version: "10.1.1"
 
       - name: test ghidra_yara (python)
-        run: python test_runner.py yara_scanner.py
+        # run: python test_runner.py yara_scanner.py
+        run: python test_runner.py non_existed_yara_scanner.py
