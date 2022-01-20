@@ -4,7 +4,7 @@ on:
       - 'v*'
 name: release ghidra_yara
 jobs:
-  test-and-build-ghidra_yara:
+  release-ghidra_yara:
     runs-on: windows-latest
     steps:
       - name: checkout
@@ -37,11 +37,11 @@ jobs:
       - name: build yara_scanner.exe
         run: pyinstaller --onefile yara_scanner.py
 
-      - name: test ghidra_yara (exe)
-        run: .\test_runner.bat dist/yara_scanner.exe
+      - name: test ghidra_yara (yara_scanner.exe)
+        run: python test_runner.py dist/yara_scanner.exe
 
       - name: prepare for release
-        run: 7z a -pnovirus .\ghidra_yara.zip .\ghidra_yara.py .\dist\yara_scanner.exe
+        run: 7z a -pnovirus ghidra_yara.zip ghidra_yara.py dist/yara_scanner.exe
       
       - name: create release
         uses: actions/create-release@v1.0.0
@@ -60,6 +60,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./ghidra_yara.zip
+          asset_path: ghidra_yara.zip
           asset_name: ghidra_yara.zip
           asset_content_type: application/zip
