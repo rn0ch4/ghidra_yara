@@ -37,7 +37,7 @@ jobs:
       - name: build yara_scanner.exe
         run: pyinstaller --onefile yara_scanner.py
 
-      - name: test ghidra_yara (exe)
+      - name: test ghidra_yara (yara_scanner.exe)
         run: python test_runner.py dist/yara_scanner.exe
 
       - name: prepare for release
