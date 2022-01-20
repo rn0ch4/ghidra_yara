@@ -29,4 +29,4 @@ jobs:
           version: "10.1.1"
 
       - name: test ghidra_yara (python)
-        run: .\test_runner.bat
+        run: python test_runner.py yara_scanner.py
