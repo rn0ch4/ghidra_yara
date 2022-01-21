@@ -38,10 +38,14 @@ jobs:
         run: pyinstaller --onefile yara_scanner.py
 
       - name: test ghidra_yara (yara_scanner.exe)
-        run: python test_runner.py ./dist/yara_scanner.exe
+        run: python test_runner.py dist/yara_scanner.exe
 
       - name: prepare for release
-        run: 7z a -pnovirus ghidra_yara.zip ghidra_yara.py dist/yara_scanner.exe
+        run: |
+          mkdir ghidra_yara_test
+          cp tests/single_match_rule.yara ghidra_yara_test/test.yara
+          cp tests/test.exe ghidra_yara_test
+          7z a -pnovirus ghidra_yara.zip ghidra_yara.py ./dist/yara_scanner.exe ghidra_yara_test
       
       - name: create release
         uses: actions/create-release@v1.0.0
